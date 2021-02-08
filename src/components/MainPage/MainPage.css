@@ -1,0 +1,133 @@
+.mainPageOuterShell{
+    height: 100%;
+    background-color: rgb(167, 161, 161);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+}
+
+.mainPageOuterShell::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mainPageOuterShell::-webkit-scrollbar-thumb {
+  background-color: rgb(71, 66, 66);
+  border-radius: 5px;
+}
+
+.tooltip {
+    position: absolute;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: normal;
+    background-color: rgb(71, 71, 71);
+    border-radius: 15px;
+    z-index: 1;
+}
+
+.listTooltip{
+    top: 0;
+    left: 80px;
+    width: 150px;
+}
+
+.invertTooltip{
+    top: 0;
+    right: 80px;
+    width: 150px;
+}
+.insertTooltip{
+    top: 0;
+    left: 80px;
+    width: 150px;
+}
+.clearTooltip{
+    top: 60px;
+    left: -50px;
+    width: 150px;
+}
+
+.inputBox {
+    height: 48px;
+    width: 75px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 15px;
+    border: none;
+    text-align: center;
+}
+
+textarea:focus, input:focus, button, button:focus{
+    outline:0;
+}
+
+button:disabled, button:disabled:hover {
+    cursor: default;
+    background-color:rgb(70, 66, 66);
+    color: rgb(167, 163, 163);
+    border: none;
+}
+
+.controlButton {
+    position: relative;
+    width: 80px;
+    box-sizing: border-box;
+    background-color: rgb(27, 27, 46);
+    border: none;
+    color: white;
+    border-radius: 15px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: Roboto;
+    margin: 5px;
+}
+
+.controlButton:hover {
+    border: 2px solid white;
+}
+
+.controlPanel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    width: 220px;
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 5px;
+    background-color: rgb(91, 96, 126);
+}
+
+.addForm{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    width: 220px;
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 20px;
+    background-color: rgb(53, 92, 107);
+}
+
+.gridContainer{
+    margin: 50px;
+}
+
+.gridCell {
+    color: rgb(28, 63, 104);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gridCell.visibleCell {
+    width: 2rem;
+    height: 2rem;
+    background-color: white;
+    border-radius: 50%;
+}
