@@ -135,7 +135,6 @@ export default class BinarySearchTree {
             this.postorder(node.left);
             this.postorder(node.right);
             console.log(node.data);
-            return "fuckyou"
         }
     }
 
