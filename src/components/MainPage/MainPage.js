@@ -235,7 +235,7 @@ class MainPage extends PureComponent{
                         List
                         {this.state.listTooltipVisible &&
                             <div className="tooltip listTooltip">
-                                Lists the tree node values to the console.
+                                Lists the tree node values to the console in order.
                             </div> }
                     </button>
                 </div>
