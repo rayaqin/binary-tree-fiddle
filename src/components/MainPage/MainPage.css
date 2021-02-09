@@ -13,11 +13,12 @@
 }
 
 .errorMessage{
+    display: block;
     font-size: 14px;
     margin: 10px 0 0 0;
     padding: 0;
     color: rgb(97, 24, 24);
-    height: 15px;
+    height: 18px;
 }
 
 .mainPageOuterShell::-webkit-scrollbar-thumb {

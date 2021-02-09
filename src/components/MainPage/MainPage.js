@@ -20,7 +20,20 @@ class MainPage extends PureComponent{
     }
 
     componentDidMount() {
-        if(this.state.currentInputValue === "" && this.state.displayGrid.length === 0){
+        this.displayInitialInstructions();
+    }
+
+    componentDidUpdate() {
+        this.displayInitialInstructions();
+        if(this.state.tree.crowded){
+            this.setState({
+                errorMessage: "Due to the values entered, the displayed graph became too crowded, and some displayed nodes overlap. List nodes to see all values."
+            })
+        }
+    }
+
+    displayInitialInstructions(){
+        if (this.state.currentInputValue === "" && this.state.displayGrid.length === 0) {
             this.setState({
                 errorMessage: "Enter a valid natural number to the white box, then press the Enter key or the Insert button to get started."
             })

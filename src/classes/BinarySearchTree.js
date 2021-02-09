@@ -4,6 +4,7 @@ export default class BinarySearchTree {
     constructor() {
         this.root = null;
         this.direction = "asc"; //switch this to "desc" when inverting
+        this.crowded = false;
     }
 
     flipDirection(){
@@ -32,6 +33,9 @@ export default class BinarySearchTree {
             if (node.left === null){
                 let same = this.getNodeWithSamePosition(this.root, newNode.x, newNode.y)
                 if(same !==  null){
+                    if(same.label) {
+                        this.crowded = true;
+                    }
                     same.label = Math.min(newNode.data, same.data) + "|" + Math.max(newNode.data, same.data);
                     newNode.label = same.label;
                 }
