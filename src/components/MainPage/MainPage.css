@@ -12,6 +12,14 @@
   width: 8px;
 }
 
+.errorMessage{
+    font-size: 14px;
+    margin: 10px 0 0 0;
+    padding: 0;
+    color: rgb(97, 24, 24);
+    height: 15px;
+}
+
 .mainPageOuterShell::-webkit-scrollbar-thumb {
   background-color: rgb(71, 66, 66);
   border-radius: 5px;
@@ -126,8 +134,9 @@ button:disabled, button:disabled:hover {
 }
 
 .gridCell.visibleCell {
-    width: 2rem;
-    height: 2rem;
+    min-width: 2rem;
+    min-height: 2rem;
+    padding: 5px;
     background-color: white;
     border-radius: 50%;
 }

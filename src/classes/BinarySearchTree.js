@@ -3,6 +3,15 @@ import Node from './Node.js';
 export default class BinarySearchTree {
     constructor() {
         this.root = null;
+        this.direction = "asc"; //switch this to "desc" when inverting
+    }
+
+    flipDirection(){
+        if (this.direction === "asc") {
+            this.direction = "desc";
+        } else {
+            this.direction = "asc";
+        }
     }
 
     insert(data) {
@@ -20,20 +29,47 @@ export default class BinarySearchTree {
         if (newNode.data < node.data) {
             newNode.x = newNode.x - 2;
             newNode.y = newNode.y + 2;
-            if (node.left === null)
+            if (node.left === null){
+                let same = this.getNodeWithSamePosition(this.root, newNode.x, newNode.y)
+                if(same !==  null){
+                    same.label = Math.min(newNode.data, same.data) + "|" + Math.max(newNode.data, same.data);
+                    newNode.label = same.label;
+                }
                 node.left = newNode;
-            else
+            }
+            else {
                 this.insertNode(node.left, newNode);
+            }
         }
         else {
             newNode.x = newNode.x + 2;
             newNode.y = newNode.y + 2;
-            if (node.right === null)
+            if (node.right === null) {
+                let same = this.getNodeWithSamePosition(this.root, newNode.x, newNode.y)
+                if (same !== null) {
+                    same.label = Math.min(newNode.data, same.data) + "|" + Math.max(newNode.data, same.data);
+                    newNode.label = same.label;
+                }
                 node.right = newNode;
-            else
+            }
+            else {
                 this.insertNode(node.right, newNode);
+            }
         }
         return {x: newNode.x, y: newNode.y};
+    }
+
+    getNodeWithSamePosition(node, X, Y){
+        if(node !== null){
+            if (node.x === X && node.y === Y) {
+                return node;
+            }
+            let leftResult = this.getNodeWithSamePosition(node.left, X, Y);
+            let rightResult = this.getNodeWithSamePosition(node.right, X, Y);
+            if(leftResult) return leftResult;
+            if(rightResult) return rightResult;
+        }
+        return null;
     }
 
     remove(data) {
@@ -80,6 +116,7 @@ export default class BinarySearchTree {
             node.right = temp;
             if (node.left !== null) node.left.x = node.left.x * (-1);
             if (node.right !== null) node.right.x = node.right.x * (-1);
+            if (node.label !== null) node.label = node.label.split('|')[1] + '|' + node.label.split('|')[0];
             this.invert(node.left);
             this.invert(node.right);
         }
@@ -94,7 +131,7 @@ export default class BinarySearchTree {
 
     fillMatrix(node, matrix, minX, side = "root") {
         if(node !== null){
-            matrix[node.y][node.x + Math.abs(minX)] = node.data;
+            matrix[node.y][node.x + Math.abs(minX)] = node.label ? node.label : node.data;
             if(side === "left"){
                 matrix[node.y-1][node.x + Math.abs(minX)+1] = '/';
             }

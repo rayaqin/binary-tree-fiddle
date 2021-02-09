@@ -15,19 +15,34 @@ class MainPage extends PureComponent{
         listTooltipVisible: false,
         insertTooltipVisible: false,
         invertTooltipVisible: false,
-        clearTooltipVisible: false
+        clearTooltipVisible: false,
+        errorMessage: ""
+    }
+
+    componentDidMount() {
+        if(this.state.currentInputValue === "" && this.state.displayGrid.length === 0){
+            this.setState({
+                errorMessage: "Enter a valid natural number to the white box, then press the Enter key or the Insert button to get started."
+            })
+        }
     }
 
     handleChange = (event) => {
         if(!isNaN(event.target.value) && event.target.value.split('')[0] !== '0'){
             this.setState({
-                insertDisabled: event.target.value.length === 0,
+                insertDisabled: event.target.value.length === 0 || this.state.tree.direction === "desc",
                 currentInputValue: event.target.value.trim()
             })
         }
     }
 
     handleSubmit = () => {
+        if(this.state.tree.search(this.state.tree.getRootNode(), parseInt(this.state.currentInputValue)) !== null){
+            this.setState({
+                errorMessage: "This model does not allow node data duplication."
+            })
+            return false;
+        };
         let currentCoordinates = this.state.tree.insert(parseInt(this.state.currentInputValue));
         let newLeftMost = this.state.leftmostX;
         let newRightMost = this.state.rightmostX;
@@ -46,6 +61,7 @@ class MainPage extends PureComponent{
         let filledMatrix = this.state.tree.fillMatrix(this.state.tree.getRootNode(), emptyMatrix, newLeftMost);
 
         this.setState({
+            errorMessage: "",
             insertTooltipVisible: false,
             insertDisabled: true,
             currentInputValue: "",
@@ -76,6 +92,7 @@ class MainPage extends PureComponent{
     }
 
     invertTree = () => {
+        this.state.tree.flipDirection();
         this.state.tree.invert(this.state.tree.getRootNode());
 
         let newLeftMost = this.state.rightmostX * (-1);
@@ -85,6 +102,7 @@ class MainPage extends PureComponent{
         let filledMatrix = this.state.tree.fillMatrix(this.state.tree.getRootNode(), emptyMatrix, newLeftMost);
 
         this.setState({
+            errorMessage: this.state.tree.direction === "desc" ? "No new nodes can be added while the tree is inverted." : "",
             displayGrid: filledMatrix,
             rightmostX: newRightMost,
             leftmostX: newLeftMost
@@ -99,7 +117,8 @@ class MainPage extends PureComponent{
             leftmostX: 0,
             rightmostX: 0,
             yDepth: 0,
-            insertDisabled: true
+            insertDisabled: true,
+            clearTooltipVisible: false
         })
     }
 
@@ -180,8 +199,10 @@ class MainPage extends PureComponent{
     render(){
         return(
             <div className="mainPageOuterShell">
+                <p className="errorMessage">{this.state.errorMessage}</p>
                 <div className="addForm">
                     <input
+                        disabled={this.state.tree.direction === "desc"}
                         type="text"
                         className="inputBox"
                         value={this.state.currentInputValue}
@@ -208,7 +229,7 @@ class MainPage extends PureComponent{
                         className="controlButton"
                         onClick={this.invertTree}
                         disabled={this.state.displayGrid.length === 0}>
-                        Invert
+                        {this.state.tree.direction === "asc" ? "Invert" : "Revert"}
                         {this.state.invertTooltipVisible &&
                             <div className="tooltip invertTooltip">
                                 Inverts the entire tree from left to right.
@@ -221,7 +242,7 @@ class MainPage extends PureComponent{
                         onClick={this.clearTree}
                         disabled={this.state.displayGrid.length === 0}>
                         Clear
-                        {this.state.clearTooltipVisible &&
+                        {(this.state.clearTooltipVisible && this.state.displayGrid.length !== 0) &&
                             <div className="tooltip clearTooltip">
                                 Deletes all nodes from the tree.
                         </div>}
