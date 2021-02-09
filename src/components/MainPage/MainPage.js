@@ -118,7 +118,8 @@ class MainPage extends PureComponent{
             rightmostX: 0,
             yDepth: 0,
             insertDisabled: true,
-            clearTooltipVisible: false
+            clearTooltipVisible: false,
+            errorMessage: ""
         })
     }
 
